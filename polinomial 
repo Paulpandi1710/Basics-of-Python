@@ -1,0 +1,38 @@
+class Polynomial:
+    def __init__(self, coefficients):
+        # coefficients: list where index is the power of x
+        self.coefficients = coefficients
+
+    def display(self):
+        terms = []
+        for power, coeff in enumerate(self.coefficients):
+            if coeff == 0:
+                continue
+            term = ""
+            if power == 0:
+                term = f"{coeff}"
+            elif power == 1:
+                term = f"{coeff}x"
+            else:
+                term = f"{coeff}x^{power}"
+            terms.append(term)
+        polynomial = " + ".join(terms)
+        print("Polynomial:", polynomial)
+
+    def evaluate(self, x):
+        result = 0
+        for power, coeff in enumerate(self.coefficients):
+            result += coeff * (x ** power)
+        return result
+
+
+# Example usage:
+coeffs = [2, 3, 1]  # Represents: 2 + 3x + 1x^2
+p = Polynomial(coeffs)
+p.display()  # Output: 2 + 3x + 1x^2
+
+x_val = 2
+print(f"Value at x = {x_val}:", p.evaluate(x_val))  # Output: 2 + 6 + 4 = 12
+
+
+---
