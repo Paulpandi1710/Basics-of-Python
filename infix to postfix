@@ -1,0 +1,41 @@
+# Infix to Postfix conversion using stack
+
+operators = set(['+', '-', '*', '/', '(', ')', '^'])
+priority = {'+': 1, '-': 1, '*': 2, '/': 2, '^': 3}
+
+def infix_to_postfix(expression):
+    stack = []     # to hold operators
+    output = ''    # for final postfix expression
+
+    for ch in expression:
+        # If operand, add to output
+        if ch not in operators:
+            output += ch
+
+        # If '(', push to stack
+        elif ch == '(':
+            stack.append(ch)
+
+        # If ')', pop until '(' is found
+        elif ch == ')':
+            while stack and stack[-1] != '(':
+                output += stack.pop()
+            stack.pop()   # pop '('
+
+        else:
+            # Operator: pop while stack top has higher or equal priority
+            while stack and stack[-1] != '(' and priority[ch] <= priority[stack[-1]]:
+                output += stack.pop()
+            stack.append(ch)
+
+    # Pop remaining operators
+    while stack:
+        output += stack.pop()
+
+    return output
+
+
+# ---- Main Program ----
+expression = input("Enter infix expression: ")
+print("Infix expression: ", expression)
+print("Postfix expression:", infix_to_postfix(expression))
